@@ -2,7 +2,7 @@ name: SSL Expiry Check
 
 on:
   schedule:
-    - cron: '0 9 * * *'  # Schedule the workflow to run daily
+    - cron: '0 22 * * *'  # Schedule the workflow to run daily
 
 jobs:
   check-ssl-expiry:
