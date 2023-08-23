@@ -35,4 +35,4 @@ jobs:
             fi
           done < domain.txt
         env:
-          SLACK_WEBHOOK_URL: ${{https://hooks.slack.com/services/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}}
+          SLACK_WEBHOOK_URL: ${https://hooks.slack.com/services/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}
