@@ -22,7 +22,7 @@ jobs:
           sudo apt-get install -y openssl
 
       - name: Read domain list from file
-        run: |
+        run: bash domains.sh
           cat domains.txt | while read domains; do
             expiry_date=$(echo | openssl s_client -servername $domains -connect $domains:443 2>/dev/null | openssl x509 -noout -dates | grep "notAfter" | cut -d "=" -f 2)
             current_date=$(date +%s)
