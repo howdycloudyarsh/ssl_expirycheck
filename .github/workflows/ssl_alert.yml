@@ -33,6 +33,6 @@ jobs:
               echo "SSL Expiry Alert\n   * Domain: $domain\n   * Warning: The SSL certificate for $domain will expire in $days_to_expire days." > alert.txt
               cat alert.txt | curl -X POST -H "Content-type: application/json" --data @- $SLACK_WEBHOOK_URL
             fi
-          done
+          done < domain.txt
         env:
-          SLACK_WEBHOOK_URL: ${{https://hooks.slack.com/services/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}}
+          SLACK_WEBHOOK_URL: ${{https://hooks.slack.com/services/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}}
