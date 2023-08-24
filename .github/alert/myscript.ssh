@@ -2,7 +2,7 @@
 
 SLACK_WEBHOOK_URL=$SLACK_WEBHOOK_URL
 
-DOMAINS_FILE=".github/scripts/domains.txt"
+DOMAINS_FILE=".github/alert/domains.txt"
 DOMAINS=($(cat "${DOMAINS_FILE}"))
 
 for domain in "${DOMAINS[@]}"; do
