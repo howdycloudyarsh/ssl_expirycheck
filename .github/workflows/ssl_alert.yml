@@ -1,38 +1,25 @@
 name: SSL Expiry Check
 
-#on:
-  #push:
-    #branches:
-      - main
 on:
   schedule:
-      - cron: '0 22 * * *'  # Schedule the workflow to run daily
+    - cron: '0 22 * * *' # Run every day at midnight
+  workflow_dispatch: # Allow manual triggering
 
 jobs:
-  check-ssl-expiry:
+  ssl_check:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install required tools
+      - name: Set up environment
         run: |
-          sudo apt-get update
-          sudo apt-get install -y openssl
+          echo "SLACK_WEBHOOK_URL=${{ secrets.SLACK_WEBHOOK_URL }}" >> $GITHUB_ENV
 
-      - name: Read domain list from file
-        run: bash domains.sh
-          cat domains.txt | while read domains; do
-            expiry_date=$(echo | openssl s_client -servername $domains -connect $domains:443 2>/dev/null | openssl x509 -noout -dates | grep "notAfter" | cut -d "=" -f 2)
-            current_date=$(date +%s)
-            expiry_epoch=$(date -d "$expiry_date" +%s)
-            days_to_expire=$(( ($expiry_epoch - $current_date) / 86400 ))
-            
-            if [ $days_to_expire <= 150 ]; then
-              echo "SSL Expiry Alert\n   * Domain: $domains\n   * Warning: The SSL certificate for $domains will expire in $days_to_expire days." > alert.txt
-              cat alert.txt | curl -X POST -H "Content-type: application/json" --data @- $SLACK_WEBHOOK_URL
-            fi
-          done < domains.txt
-        env:
-          SLACK_WEBHOOK_URL: ${https://hooks.slack.com/services/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}
+      - name: Copy domains file
+        run: cp domains.txt .github/scripts/
+
+      - name: Run SSL check script
+        run: |
+          bash .github/scripts/ssl-check.sh
