@@ -26,4 +26,4 @@ jobs:
 
       - name: Run SSL check script
         run: |
-          bash .github/alert/ssl-check.sh
+          bash .github/alert/myscript.ssh
