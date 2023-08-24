@@ -1,14 +1,13 @@
 name: SSL Expiry Check
 
-on:
-  push:
-    branches:
-      - main
 #on:
- # schedule:
-  #  - cron: '0 22 * * *' # Run every day at midnight
-  #workflow_dispatch: # Allow manual triggering
-
+  #push:
+   # branches:
+    #  - main
+on:
+  schedule:
+   - cron: '0 22 * * *' # Run every day at midnight
+ 
 jobs:
   ssl_check:
     runs-on: ubuntu-latest
