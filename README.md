@@ -1,2 +1,2 @@
 # ssl_expirycheck
-The Workflow will check the ssl expiry of the domain everyday and send the alert on Slack.
+The Workflow will check the ssl certificate expiry of the domains everyday/scheduled-time and send the alert on Slack.
